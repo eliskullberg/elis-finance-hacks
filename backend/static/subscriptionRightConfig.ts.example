@@ -1,0 +1,15 @@
+import { subscriptionRightConfig } from '../src/interfaces/interfaces';
+
+const subscriptionRights: subscriptionRightConfig = {
+  rights: [
+    {
+      avanzaId: 1605261,
+      parentStockAvanzaId: 717421,
+      subscriptionPrice: 0.6,
+      rightsPerExistingShare: 1,
+      rightsNeededToBuyNewShare: 1 + 2 / 3
+    }
+  ]
+};
+
+export default subscriptionRights;

@@ -1,0 +1,49 @@
+import { StaticPortfolioInfo } from '../src/interfaces/interfaces';
+
+const portfolio: StaticPortfolioInfo = {
+  financialInstruments: [
+    // Castellum
+    {
+      avanzaId: 5353,
+      type: 'stock',
+      totalPurchasePrice: 31773,
+      numberOwned: 300,
+      currency: 'SEK'
+    },
+    // Starbreeze A
+    {
+      avanzaId: 569319,
+      type: 'stock',
+      totalPurchasePrice: 16664,
+      numberOwned: 20830,
+      currency: 'SEK'
+    },
+    // Avanza Global
+    {
+      avanzaId: 878733,
+      type: 'fund',
+      totalPurchasePrice: 953847,
+      numberOwned: 6219.0654,
+      currency: 'SEK'
+    },
+    // Xetra-Gold ETC
+    {
+      avanzaId: 1077331,
+      type: 'certificate',
+      totalPurchasePrice: 8547.4,
+      numberOwned: 180,
+      currency: 'EUR'
+    }
+  ],
+  bankAccounts: [
+    {
+      name: 'SEB Privatkonto',
+      type: 'bankAccount',
+      value: 70000,
+      interestRate: 1.0025,
+      currency: 'SEK'
+    }
+  ]
+};
+
+export default portfolio;
