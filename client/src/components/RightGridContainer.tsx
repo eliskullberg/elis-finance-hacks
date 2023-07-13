@@ -1,6 +1,6 @@
 import RightCard from "./RightCard";
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 
 import Grid from "@mui/material/Unstable_Grid2";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -9,33 +9,44 @@ import {
   ServerSubscriptionRightResponse,
   SubscriptionRight,
 } from "../interfaces/interfaces";
+import { ApiKeyContext } from "./ApiKeyContext";
 
 function RightGridContainer() {
   const [state, setState] = useState("new");
   const [rightCards, setRightCards] = useState<SubscriptionRight[] | []>([]);
+  const { apiKey, setApiKey } = useContext(ApiKeyContext);
 
   const subscriptionRightUrl =
     "https://boreal-antonym-390612.ew.r.appspot.com/api/subscriptionrights/";
 
   async function getLiveRightData() {
     try {
+      const config = {
+        headers: {
+          "x-api-key": apiKey,
+        },
+      };
       const rightData: ServerSubscriptionRightResponse = (
-        await axios.get(subscriptionRightUrl)
+        await axios.get(subscriptionRightUrl, config)
       ).data;
       return rightData.rights;
     } catch (error) {
       console.error(error);
       setState("error");
-      return [];
     }
   }
 
   useEffect(() => {
     if (state === "new") {
       setState("loading");
-      getLiveRightData()
-        .then((res) => setRightCards(res))
-        .then((res) => setState("ready"));
+      getLiveRightData().then((res) => {
+        if (res) {
+          setRightCards(res);
+          setState("ready");
+        } else {
+          setState("error");
+        }
+      });
     }
   }, [state]);
 
@@ -57,7 +68,7 @@ function RightGridContainer() {
       </Box>
     );
   } else {
-    return <>Error</>;
+    return <>API error</>;
   }
 }
 

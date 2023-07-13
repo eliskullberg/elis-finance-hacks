@@ -1,3 +1,5 @@
+import { Dispatch, SetStateAction } from "react";
+
 type FinancialInstrumentType = "stock" | "fund" | "certificate" | "bankAccount";
 
 export interface BankAccountHolding {
@@ -35,6 +37,11 @@ export interface Holding {
   developmentOneMonth?: number | null;
   developmentThreeMonths?: number | null;
   developmentOneYear?: number;
+}
+
+export interface IApiKeyContext {
+  apiKey: string;
+  setApiKey: Dispatch<SetStateAction<string>>;
 }
 
 export interface Portfolio {

@@ -13,7 +13,6 @@ import {
 import { StaticRouter } from "react-router-dom/server";
 import PortFolioSummary from "./PortfolioSummary";
 import RightGridContainer from "./RightGridContainer";
-import Header from "./Header";
 
 function Router(props: { children?: React.ReactNode }) {
   const { children } = props;
@@ -62,7 +61,6 @@ export default function TabsRouter() {
   return (
     <Router>
       <Box sx={{ width: "100%" }}>
-        <Header />
         <MyTabs />
         <Routes>
           <Route path="/holdings" element={<PortFolioSummary />} />

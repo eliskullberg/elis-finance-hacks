@@ -132,3 +132,6 @@ dist
 # Portfolio data
 backend/static/portfolio.ts
 backend/static/subscriptionRightConfig.ts
+
+# Backend deploy config
+backend/secrets.yaml

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
@@ -11,6 +11,7 @@ import {
 import HoldingsSummary from "./HoldingsSummary";
 import HoldingsDataTable from "./portfoliotables/HoldingsDataTable";
 import TableDivider from "./portfoliotables/TableDivider";
+import { ApiKeyContext } from "./ApiKeyContext";
 
 function PortfolioSummary() {
   const [state, setState] = useState("new");
@@ -22,6 +23,7 @@ function PortfolioSummary() {
   });
   const [holdingsTotals, setHoldingsTotals] =
     useState<ServerPortfolioTotalsResponse | null>(null);
+  const { apiKey, setApiKey } = useContext(ApiKeyContext);
   const portfolioBaseUrl =
     "https://boreal-antonym-390612.ew.r.appspot.com/api/portfolio/";
 
@@ -29,27 +31,31 @@ function PortfolioSummary() {
     ServerPortfolioResponse | undefined
   > {
     try {
-      const portfolioRaw = await axios.get(portfolioBaseUrl);
+      const config = {
+        headers: {
+          "x-api-key": apiKey,
+        },
+      };
+      const portfolioRaw = await axios.get(portfolioBaseUrl, config);
       const pd: ServerPortfolioResponse = portfolioRaw.data;
       return pd;
     } catch (error) {
       console.error(error);
-      setState("error");
     }
   }
 
   useEffect(() => {
     if (state === "new") {
       setState("loading");
-      console.log("loading data");
-      getPortfolioData()
-        .then((data) => {
-          if (data) {
-            setHoldingsTotals(data.totals);
-          }
+      getPortfolioData().then((data) => {
+        if (data) {
+          setHoldingsTotals(data.totals);
           setPortfolioData(mapToHoldingsData(data));
-        })
-        .then((s) => setState("ready"));
+          setState("ready");
+        } else {
+          setState("error");
+        }
+      });
     }
   }, [state]);
 
@@ -112,7 +118,7 @@ function PortfolioSummary() {
       </>
     );
   } else {
-    return "ERROR";
+    return <>Data loading error</>;
   }
 }
 
