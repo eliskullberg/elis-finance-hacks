@@ -18,7 +18,7 @@ function RightCard(props: Props) {
         <Typography variant="body1">
           Subscription price: {props.right.subscriptionPrice}
         </Typography>
-        <Typography variant="body1">Terms: {props.right.terms}:</Typography>
+        <Typography variant="body1">Terms: {props.right.terms}</Typography>
         <Typography variant="body1">
           Current price: {props.right.currentPrice}
         </Typography>

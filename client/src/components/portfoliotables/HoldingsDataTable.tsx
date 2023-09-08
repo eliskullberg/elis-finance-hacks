@@ -130,7 +130,7 @@ function HoldingsDataTable(props: Props) {
             value: props.holdings.reduce((acc, curr) => {
               if (curr.totalMarketValue) {
                 return acc + curr.totalMarketValue;
-              } else return 0;
+              } else return acc;
             }, 0),
           },
         }}
